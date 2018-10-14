@@ -4,22 +4,35 @@
 
 using namespace std;
 
-int MapW, MapH;
-char Map[100][100]={
-"########################################################",
-"#                                                      #",
-"#                                                      #",
-"#                                   @                  #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"#                                                      #",
-"########################################################"};
+int MapW, MapH, score=0;
+char Map[150][150]={
+"##################Console Snake, Good Luck#########################",
+"###################################################################",//11
+"#                                                                 #",
+"#                                                                 #",
+"#                                              @                  #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"#                                                                 #",
+"###################################################################"};
 
 struct snakeBlock{
     int x,y;
@@ -45,6 +58,7 @@ void drawMap(vector <snakeBlock>snake){
         }
         MapH++;
     }
+    cout << "\n\tYour Score: "<<score;
     for (int i =0 ;i<snake.size();i++){
         gotoxy(snake[i].x,snake[i].y);
         cout<<char (219);
@@ -62,6 +76,7 @@ bool checkLose (int x, int y, vector <snakeBlock>&snake){
     }
     if (Map[y][x]=='@'){
         Map[y][x]=' ';
+        score++;
         snakeBlock newSnake;
         newSnake.x=snake[snake.size()-1].x;
         newSnake.y=snake[snake.size()-1].y;
@@ -118,7 +133,7 @@ int main()
     int GameSpeed=150;
     short dire[2]={0,1};
     vector<snakeBlock> snake;
-    snakeInit(1,1,snake);
+    snakeInit(1,2,snake);
     drawMap(snake);
     while (GameIsRunning)
     {
@@ -164,3 +179,4 @@ int main()
         Sleep(GameSpeed);
     }
 }
+
