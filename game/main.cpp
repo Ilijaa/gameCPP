@@ -7,7 +7,7 @@ using namespace std;
 int MapW, MapH, score=0;
 char Map[150][150]={
 "##################Console Snake, Good Luck#########################",
-"###################################################################",//11
+"###################################################################",
 "#                                                                 #",
 "#                                                                 #",
 "#                                              @                  #",
@@ -130,7 +130,7 @@ bool snakeMove (vector<snakeBlock> &snake, short dire[2]){
 int main()
 {
    bool GameIsRunning=true;
-    int GameSpeed=150;
+    int GameSpeed=100;
     short dire[2]={0,1};
     vector<snakeBlock> snake;
     snakeInit(1,2,snake);
@@ -172,7 +172,8 @@ int main()
         if(snakeMove(snake,dire))
         {
           system("cls");
-          cout<<"Game Over"<<endl;
+          cout<<"Game Over\n";
+          cout<<"Your score was: "<<score<<"\n";
           system("pause");
           return 0;
         }
