@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1539638100 source:c:\users\ilija\desktop\c\c++\consolegame\main.cpp
+	<iostream>
+	<windows.h>
+	<vector>
+	"levels.h"
+
+1539625535 c:\users\ilija\desktop\c\c++\consolegame\levels.h
+
+1539623731 c:\users\ilija\desktop\c\c++\consolegame\src\level.cpp
+	"../include/level.h"
+
+1539623604 c:\users\ilija\desktop\c\c++\consolegame\include\level.h
+

@@ -1,38 +1,12 @@
 #include <iostream>
 #include <windows.h>
 #include <vector>
-
+#include "levels.h"
 using namespace std;
 
-int MapW, MapH, score=0;
-char Map[150][150]={
-"##################Console Snake, Good Luck#########################",
-"###################################################################",
-"#                                                                 #",
-"#                                                                 #",
-"#                                              @                  #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                      @                          #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"#                                                                 #",
-"###################################################################"};
+int MapW, MapH, Score=0;
+int Lvl2 = 8, Lvl3=10, Lvl4=12;
+string Name;
 
 struct snakeBlock{
     int x,y;
@@ -42,8 +16,9 @@ void gotoxy (int x, int y){
     COORD coord={x,y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
+void playSnake(char Map[150][150]);
 
-void drawMap(vector <snakeBlock>snake){
+void drawMap(vector <snakeBlock>snake, char Map[150][150]){
     MapH=0;
     system("cls");
     for (int i=0;Map[i][0];i++){
@@ -58,7 +33,7 @@ void drawMap(vector <snakeBlock>snake){
         }
         MapH++;
     }
-    cout << "\n\tYour Score: "<<score;
+    cout << "\n\t"<<Name << " your Score: "<<Score<<"\n\tThis game have 3 levels to advance you need points :D";
     for (int i =0 ;i<snake.size();i++){
         gotoxy(snake[i].x,snake[i].y);
         cout<<char (219);
@@ -66,7 +41,7 @@ void drawMap(vector <snakeBlock>snake){
 
 }
 
-bool checkLose (int x, int y, vector <snakeBlock>&snake){
+bool checkLose (int x, int y, vector <snakeBlock>&snake,char Map[150][150]){
     if (Map[y][x]=='#')
         return true;
     if (snake.size()>3){
@@ -76,7 +51,7 @@ bool checkLose (int x, int y, vector <snakeBlock>&snake){
     }
     if (Map[y][x]=='@'){
         Map[y][x]=' ';
-        score++;
+        Score++;
         snakeBlock newSnake;
         newSnake.x=snake[snake.size()-1].x;
         newSnake.y=snake[snake.size()-1].y;
@@ -85,10 +60,25 @@ bool checkLose (int x, int y, vector <snakeBlock>&snake){
         do{
             rx=rand()%MapW;
             ry=rand()%MapH;
-        }while (checkLose(rx, ry,snake));
+        }while (checkLose(rx, ry,snake, Map));
         Map[ry][rx]='@';
-        drawMap(snake);
+        drawMap(snake, Map);
     }
+    if(Score>Lvl2){
+        Lvl2 = 150;
+        playSnake(Map2);
+            }
+
+    if(Score>Lvl3){
+        Lvl3 = 150;
+        playSnake(Map3);
+    }
+    if(Score>Lvl4){
+        Lvl4 = 150;
+        playSnake(Map4);
+        }
+
+
     return false;
 }
 
@@ -100,7 +90,7 @@ void snakeInit(int x, int y, vector<snakeBlock> &snake){
     snake.push_back(newSnake);
 }
 
-bool snakeMove (vector<snakeBlock> &snake, short dire[2]){
+bool snakeMove (vector<snakeBlock> &snake, short dire[2],char Map[150][150]){
     int oldx,oldy,x,y;
     gotoxy(snake[snake.size()-1].x,snake[snake.size()-1].y);
     cout<<" ";
@@ -112,7 +102,7 @@ bool snakeMove (vector<snakeBlock> &snake, short dire[2]){
     cout<<char(219);
     if (snake.size()>1)
     {
-        for (int i = 1;i<snake.size();i++)
+        for (int i = 1; i<snake.size();i++)
         {
             x=snake[i].x;
             y=snake[i].y;
@@ -122,19 +112,18 @@ bool snakeMove (vector<snakeBlock> &snake, short dire[2]){
             oldy=y;
         }
     }
-    if (checkLose(snake[0].x, snake[0].y,snake))
+    if (checkLose(snake[0].x, snake[0].y,snake, Map))
         return true;
     return false;
 }
 
-int main()
-{
-   bool GameIsRunning=true;
+void playSnake(char Map[150][150]){
+    bool GameIsRunning=true;
     int GameSpeed=100;
     short dire[2]={0,1};
     vector<snakeBlock> snake;
     snakeInit(1,2,snake);
-    drawMap(snake);
+    drawMap(snake, Map);
     while (GameIsRunning)
     {
         if (GetAsyncKeyState(VK_UP))
@@ -169,15 +158,28 @@ int main()
                 dire[0]=1;
             }
         }
-        if(snakeMove(snake,dire))
+        if(snakeMove(snake,dire,Map))
         {
           system("cls");
           cout<<"Game Over\n";
-          cout<<"Your score was: "<<score<<"\n";
+          cout<< Name<<" your Score was: "<<Score<<"\n";
           system("pause");
-          return 0;
+          exit(EXIT_SUCCESS);
         }
         Sleep(GameSpeed);
-    }
+}
 }
 
+int main()
+{
+    string a;
+    cout<<"Enter your name: ";
+    getline(cin,Name);
+    cout<<Name<<" shall we start ? (yes)";
+    cin>>a;
+    if(a=="yes")
+        playSnake(Map1);
+
+    return 0;
+
+}
