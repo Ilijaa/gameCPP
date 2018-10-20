@@ -33,7 +33,7 @@ void drawMap(vector <snakeBlock>snake, char Map[150][150]){
         }
         MapH++;
     }
-    cout << "\n\t"<<Name << " your Score: "<<Score<<"\n\tThis game have 3 levels to advance you need points :D";
+    cout << "\n\t"<<Name << " your Score: "<<Score<<"\n\tThis game have 4 levels to advance you need points :D";
     for (int i =0 ;i<snake.size();i++){
         gotoxy(snake[i].x,snake[i].y);
         cout<<char (219);
